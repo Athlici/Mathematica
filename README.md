@@ -13,7 +13,9 @@ Table of Contents
 RectanglePacker
 ===============
 Encoding of the 2D-Bin-Packing problem with orientations as a Mixed-Integer-Program.
+
 This is then solved optimally by Mathematicas LinearProgramming function, but due to the hardness of the problem, the immaturity of the encoding, or the weakness of Mathematicas solver it is basically intractable for n>7.
+
 ![6 random rectangles](https://github.com/Athlici/Mathematica/blob/master/RectanglePacking/RectPacking.png)
 
 
