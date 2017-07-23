@@ -1,0 +1,217 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8277,        209]
+NotebookOptionsPosition[      7886,        191]
+NotebookOutlinePosition[      8229,        206]
+CellTagsIndexPosition[      8186,        203]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"VertexDegreeEnumeration", "[", "v_", "]"}], ":=", 
+   RowBox[{"VertexDegreeEnumeration", "[", 
+    RowBox[{"1", ",", 
+     RowBox[{"Length", "[", "v", "]"}], ",", "v"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"VertexDegreeEnumeration", "[", 
+    RowBox[{"i_", ",", "n_", ",", "v_"}], "]"}], ":=", 
+   RowBox[{"Join", "@@", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"S", ",", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"i", "\[UndirectedEdge]", "#"}], "&"}], "/@", "#"}], 
+            ",", "S"}], "]"}]}], "]"}], "/@", "\[IndentingNewLine]", 
+        RowBox[{"VertexDegreeEnumeration", "[", 
+         RowBox[{
+          RowBox[{"i", "+", "1"}], ",", "n", ",", 
+          RowBox[{"ReplacePart", "[", 
+           RowBox[{"v", ",", 
+            RowBox[{"Prepend", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "\[Rule]", 
+                 RowBox[{
+                  RowBox[{"v", "[", 
+                   RowBox[{"[", "#", "]"}], "]"}], "-", "1"}]}], "&"}], "/@", 
+               "#"}], ",", 
+              RowBox[{"i", "\[Rule]", "0"}]}], "]"}]}], "]"}]}], "]"}]}], 
+       "&"}], "/@", "\[IndentingNewLine]", 
+      RowBox[{"Subsets", "[", 
+       RowBox[{
+        RowBox[{"Select", "[", 
+         RowBox[{
+          RowBox[{"Range", "[", 
+           RowBox[{
+            RowBox[{"i", "+", "1"}], ",", "n"}], "]"}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"v", "[", 
+             RowBox[{"[", "#", "]"}], "]"}], ">", "0"}], "&"}]}], "]"}], ",", 
+        
+        RowBox[{"{", 
+         RowBox[{"v", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], "}"}]}], "]"}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"VertexDegreeEnumeration", "[", 
+    RowBox[{"n_", ",", "n_", ",", "v_"}], "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"v", "[", 
+       RowBox[{"[", "n", "]"}], "]"}], "\[Equal]", "0"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"{", "}"}], "}"}], ",", 
+     RowBox[{"{", "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7088372683216248`*^9, 3.708837274556876*^9}, {
+   3.708837494380788*^9, 3.708837499949209*^9}, {3.708837713612865*^9, 
+   3.708837838077489*^9}, {3.708837912269449*^9, 3.708837949741529*^9}, {
+   3.708838087173423*^9, 3.7088381510612183`*^9}, {3.708838281838354*^9, 
+   3.708838327253963*^9}, {3.708838424444426*^9, 3.7088384437100973`*^9}, {
+   3.708839825438539*^9, 3.708839852598407*^9}, {3.70884826347164*^9, 
+   3.7088482698391542`*^9}, 3.709828202834503*^9, 3.709828273345871*^9, {
+   3.709828363601747*^9, 3.709828399409358*^9}, {3.709828465545492*^9, 
+   3.709828480705653*^9}, {3.709828525023765*^9, 3.709828533977241*^9}, {
+   3.709828658289444*^9, 3.709828686625351*^9}}],
+
+Cell["List the cubic graphs of size 6.", "Text",
+ CellChangeTimes->{{3.7098290670162897`*^9, 3.709829073736266*^9}, {
+  3.709829136240211*^9, 3.709829137455538*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DeleteDuplicates", "[", 
+  RowBox[{
+   RowBox[{"Graph", "/@", 
+    RowBox[{"VertexDegreeEnumeration", "[", 
+     RowBox[{
+      RowBox[{"3", "&"}], "/@", 
+      RowBox[{"Range", "[", "6", "]"}]}], "]"}]}], ",", "IsomorphicGraphQ"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.709828712594303*^9, 3.709828767784851*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   GraphicsBox[
+    NamespaceBox["NetworkGraphics",
+     DynamicModuleBox[{Typeset`graph = HoldComplete[
+       Graph[{1, 2, 3, 4, 5, 6}, {
+        Null, {{1, 2}, {1, 3}, {1, 4}, {2, 3}, {2, 5}, {3, 6}, {4, 5}, {4, 
+         6}, {5, 6}}}]]}, 
+      TagBox[
+       GraphicsGroupBox[
+        GraphicsComplexBox[{{1.1406421224279604`, 0.}, {1.1403769614268906`, 
+         1.1718082023691432`}, {1.717940284285528, 0.5859984882349121}, {
+         0.0008593852877126773, 0.052992809082626824`}, {0., 
+         1.1180683081459115`}, {0.5691569313778273, 0.5861424471301506}}, {
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], ArrowBox[{1, 2}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{1, 3}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{1, 4}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{2, 3}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{2, 5}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{3, 6}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{4, 5}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{4, 6}, 0.020280986751617797`]}, 
+           {Arrowheads[0.], ArrowBox[{5, 6}, 0.020280986751617797`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[1, 0.020280986751617797], DiskBox[2, 0.020280986751617797],
+            DiskBox[3, 0.020280986751617797], 
+           DiskBox[4, 0.020280986751617797], DiskBox[5, 0.020280986751617797],
+            DiskBox[6, 0.020280986751617797]}}]],
+       MouseAppearanceTag["NetworkGraphics"]],
+      AllowKernelInitialization->False]],
+    DefaultBaseStyle->{
+     "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+    
+    FormatType->TraditionalForm,
+    FrameTicks->None], ",", 
+   GraphicsBox[
+    NamespaceBox["NetworkGraphics",
+     DynamicModuleBox[{Typeset`graph = HoldComplete[
+       Graph[{1, 2, 3, 4, 5, 6}, {
+        Null, {{1, 2}, {1, 3}, {1, 4}, {2, 5}, {2, 6}, {3, 5}, {3, 6}, {4, 
+         5}, {4, 6}}}]]}, 
+      TagBox[
+       GraphicsGroupBox[
+        GraphicsComplexBox[{{0.8593246091485872, 0.}, {0., 
+         0.7298388873615552}, {1.535622063396308, 0.3921828138520816}, {
+         1.5354492269857318`, 1.0706911822396579`}, {0.7526826353632357, 
+         0.7314881102449802}, {0.8573854977018851, 1.4627227332540724`}}, {
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], ArrowBox[{1, 2}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{1, 3}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{1, 4}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{2, 5}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{2, 6}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{3, 5}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{3, 6}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{4, 5}, 0.01872869439279315]}, 
+           {Arrowheads[0.], ArrowBox[{4, 6}, 0.01872869439279315]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[1, 0.01872869439279315], DiskBox[2, 0.01872869439279315], 
+           DiskBox[3, 0.01872869439279315], DiskBox[4, 0.01872869439279315], 
+           DiskBox[5, 0.01872869439279315], 
+           DiskBox[6, 0.01872869439279315]}}]],
+       MouseAppearanceTag["NetworkGraphics"]],
+      AllowKernelInitialization->False]],
+    DefaultBaseStyle->{
+     "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+    
+    FormatType->TraditionalForm,
+    FrameTicks->None]}], "}"}]], "Output",
+ CellChangeTimes->{{3.709828731112611*^9, 3.709828780447523*^9}}]
+}, Open  ]]
+},
+WindowSize->{1916, 716},
+WindowMargins->{{Automatic, 1082}, {Automatic, 722}},
+FrontEndVersion->"11.0 for Linux x86 (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2998, 78, 126, "Input"],
+Cell[3559, 100, 165, 2, 31, "Text"],
+Cell[CellGroupData[{
+Cell[3749, 106, 342, 9, 34, "Input"],
+Cell[4094, 117, 3776, 71, 189, "Output"]
+}, Open  ]]
+}
+]
+*)
+

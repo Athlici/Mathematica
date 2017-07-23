@@ -21,3 +21,9 @@ This is then solved optimally by Mathematicas LinearProgramming function, but du
 
 Miscellaneous
 =============
+
+Enumerate Graphs by Vertex Degrees
+----------------------------------
+Simple recursive function to, given a list of vertex degrees, enumerate all graphs with those degrees.
+
+In the current, primitive, version it gets swamped by isomorphic graphs.
