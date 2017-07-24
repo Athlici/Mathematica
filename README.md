@@ -18,6 +18,18 @@ This is then solved optimally by Mathematicas LinearProgramming function, but du
 
 ![6 random rectangles](https://github.com/Athlici/Mathematica/blob/master/RectanglePacking/RectPacking.png)
 
+Algorithms
+==========
+A few basic algorithms, implemented for my edification and published to subvert asinine homework of the type "use algorithm X to solve problem instance Y".
+
+Simplex
+-------
+Optimise a linear program.
+
+CYK
+---
+Decide word-membership in a CNF context free language.
+
 
 Miscellaneous
 =============
