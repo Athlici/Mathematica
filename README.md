@@ -8,6 +8,7 @@ Table of Contents
 =================
 
   * [RectanglePacker](#RectanglePacker)
+  * [FundamentalGroupElement](#FundamentalGroupElement)
   * [Miscellaneous](#Miscellaneous)
 
 RectanglePacker
@@ -17,6 +18,13 @@ Encoding of the 2D-Bin-Packing problem with orientations as a Mixed-Integer-Prog
 This is then solved optimally by Mathematicas LinearProgramming function, but due to the hardness of the problem, the immaturity of the encoding, or the weakness of Mathematicas solver it is basically intractable for n>7.
 
 ![6 random rectangles](https://github.com/Athlici/Mathematica/blob/master/RectanglePacking/RectPacking.png)
+
+FundamentalGroupElement
+=======================
+Given a (hermite interpolation of) a path through the complex plane with missing points this function will calculate the element in the fundamental group corresponding to its equivalence class.
+
+For example, the commutator aba<sup>-1</sup>b<sup>-1</sup> (with -a=b=1) is the equivalence class of the following path:
+![Commutator](https://github.com/Athlici/Mathematica/blob/master/FundamentalGroupElement/Commutator.png)
 
 Algorithms
 ==========

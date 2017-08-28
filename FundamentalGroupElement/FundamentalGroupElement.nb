@@ -1,0 +1,534 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     18741,        526]
+NotebookOptionsPosition[     17437,        489]
+NotebookOutlinePosition[     17801,        505]
+CellTagsIndexPosition[     17758,        502]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "Calculating the equivalence class of a circular hermite spline in the \
+fundamental group of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[DoubleStruckCapitalC]", "\\", 
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox["c", "1"], ",", "...", ",", 
+      SubscriptBox["c", "n"]}]}]}], TraditionalForm]],ExpressionUUID->
+  "e7744565-52f8-4ba6-be8a-309fb8d037f0"],
+ "}"
+}], "Title",
+ CellChangeTimes->{{3.660215198847456*^9, 3.660215217511217*^9}, {
+  3.660215392026586*^9, 3.660215399874063*^9}, {3.6602154848322268`*^9, 
+  3.660215571658762*^9}, {3.660216699109662*^9, 
+  3.6602167016854763`*^9}},ExpressionUUID->"e0ad77f1-07f7-48b7-890c-\
+9b42f215680c"],
+
+Cell[TextData[{
+ "In Topology the fundamental group of X=",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[DoubleStruckCapitalC]", "\\", 
+    RowBox[{"{", 
+     SubscriptBox["c", "1"]}]}], TraditionalForm]],ExpressionUUID->
+  "33fa6d3b-8dfd-411b-a49a-5be01304cec9"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{",", "...", ",", 
+    SubscriptBox["c", "n"], " "}], TraditionalForm]], "Input",ExpressionUUID->
+  "2be1aa6d-920b-4f29-bda2-c5bf647e3b01"],
+ "} is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[LeftAngleBracket]", 
+    RowBox[{
+     SubscriptBox["c", "1"], ",", "...", ",", 
+     SubscriptBox["c", "n"]}]}], TraditionalForm]],ExpressionUUID->
+  "1e893fef-8b19-4132-b4ae-1dc2253076a7"],
+ StyleBox["|-\[RightAngleBracket]. The equivalence class of a given path \
+\[Gamma]:[0,1]\[Rule]X with \[Gamma][0]==\[Gamma][1] tells us in which order \
+it encircles the missing points.\nHowever, at least for me, it was not \
+immediately clear how to actually calculate it.\nThis notebook is a primitive \
+attempt to do just that, by utilising the singularity theorem and splitting \
+the curve at (not yet) generic critical points.", "OperatorCharacter"]
+}], "Text",
+ CellChangeTimes->{{3.660215607657789*^9, 3.660215689467511*^9}, {
+  3.660215733413233*^9, 3.660215828088026*^9}, {3.660215877135157*^9, 
+  3.6602159767809772`*^9}, {3.660216709676251*^9, 3.660216719668048*^9}, {
+  3.6602167535235653`*^9, 3.660216773275014*^9}, {3.712940774352173*^9, 
+  3.712940774703271*^9}, {3.712941574928048*^9, 
+  3.712941664550214*^9}},ExpressionUUID->"9cf7c8fc-635d-4b38-9f23-\
+96ac159193c9"],
+
+Cell[TextData[{
+ "Since ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " is screwing up the tangents in the interpolation points for a polynomial \
+in the complex plane I have written my own crappy Hermite-Interpolation."
+}], "Text",
+ CellChangeTimes->{{3.660216048113984*^9, 3.660216110522015*^9}, {
+   3.660216142145206*^9, 3.6602161503973513`*^9}, 
+   3.712940780111516*^9},ExpressionUUID->"05d523ba-942b-4c9a-bb73-\
+b1b218f7bd7f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"HermiteSplineList", "[", "a_List", "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"Join", "@@", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Most", "[", "#", "]"}], ",", 
+            RowBox[{"Rest", "[", "#", "]"}]}], "}"}], "&"}], "/@", 
+         RowBox[{"{", 
+          RowBox[{"a", ",", 
+           RowBox[{
+            RowBox[{"Append", "[", 
+             RowBox[{
+              RowBox[{"Prepend", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Drop", "[", 
+                  RowBox[{"a", ",", "2"}], "]"}], "-", 
+                 RowBox[{"Drop", "[", 
+                  RowBox[{"a", ",", 
+                   RowBox[{"-", "2"}]}], "]"}]}], ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"#", "/", 
+                   RowBox[{"Abs", "[", "#", "]"}]}], "&"}], "[", 
+                 RowBox[{
+                  RowBox[{"a", "[", 
+                   RowBox[{"[", "2", "]"}], "]"}], "-", 
+                  RowBox[{"a", "[", 
+                   RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], "]"}], ",", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"#", "/", 
+                 RowBox[{"Abs", "[", "#", "]"}]}], "&"}], "[", 
+               RowBox[{
+                RowBox[{"a", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"-", "1"}], "]"}], "]"}], "-", 
+                RowBox[{"a", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"-", "2"}], "]"}], "]"}]}], "]"}]}], "]"}], "/", 
+            "2"}]}], "}"}]}], ")"}]}], ")"}], "\[Transpose]"}], ".", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         RowBox[{"2", "t"}]}], ")"}], 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "-", "t"}], ")"}], "^", "2"}]}], ",", 
+      RowBox[{
+       RowBox[{"t", "^", "2"}], 
+       RowBox[{"(", 
+        RowBox[{"3", "-", 
+         RowBox[{"2", "t"}]}], ")"}]}], ",", 
+      RowBox[{"t", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "-", "t"}], ")"}], "^", "2"}]}], ",", 
+      RowBox[{
+       RowBox[{"t", "^", "2"}], 
+       RowBox[{"(", 
+        RowBox[{"t", "-", "1"}], ")"}]}]}], "}"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CyclicHermiteSplineList", "[", "a_List", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"HermiteSplineList", "[", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"a", "[", 
+         RowBox[{"[", 
+          RowBox[{"-", "1"}], "]"}], "]"}], "}"}], ",", "a", ",", 
+       RowBox[{"a", "[", 
+        RowBox[{"[", 
+         RowBox[{"1", ";;", "2"}], "]"}], "]"}]}], "]"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"2", ";;", 
+      RowBox[{"-", "2"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ListToPiecewise", "[", "f_List", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Evaluate", "[", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"FullSimplify", "[", 
+          RowBox[{
+           RowBox[{"Piecewise", "[", 
+            RowBox[{
+             RowBox[{"MapIndexed", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"#", "/.", 
+                   RowBox[{"t", "\[Rule]", 
+                    RowBox[{"t", "-", 
+                    RowBox[{"#2", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}]}]}]}], ",", 
+                  RowBox[{
+                   RowBox[{"#2", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "<", "t", "\[LessEqual]", 
+                   
+                   RowBox[{
+                    RowBox[{"#2", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "+", "1"}]}]}], "}"}], 
+                "&"}], ",", 
+               RowBox[{"{", "##2", "}"}]}], "]"}], ",", "#"}], "]"}], "/.", 
+           RowBox[{"t", "\[Rule]", 
+            RowBox[{
+             RowBox[{"Length", "[", "f", "]"}], "t"}]}]}], "]"}], "&"}], "@@",
+         "\[IndentingNewLine]", "f"}], ")"}], "/.", 
+      RowBox[{"t", "\[Rule]", "#"}]}], "]"}], "&"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"HermiteSpline", "[", "a_List", "]"}], ":=", 
+   RowBox[{"ListToPiecewise", "[", 
+    RowBox[{"HermiteSplineList", "[", "a", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CyclicHermiteSpline", "[", "a_List", "]"}], ":=", 
+   RowBox[{"ListToPiecewise", "[", 
+    RowBox[{"CyclicHermiteSplineList", "[", "a", "]"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.712936063540751*^9, 3.712936116895092*^9}, {
+  3.7129372857891293`*^9, 3.7129373179602947`*^9}, {3.712938107353166*^9, 
+  3.712938110116982*^9}},ExpressionUUID->"f71ee779-2f95-40d0-8a29-\
+2fc2a3e88444"],
+
+Cell[TextData[{
+ "Given this we can plot the commutator ab",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["a", 
+     RowBox[{"-", "1"}]], 
+    SuperscriptBox["b", 
+     RowBox[{"-", "1"}]]}], TraditionalForm]],ExpressionUUID->
+  "39590bb6-a94c-48fc-b341-ca72527bd181"],
+ " over \[DoubleStruckCapitalC]\\{a,b} with -a=b=1:"
+}], "Text",
+ CellChangeTimes->{{3.660216499668872*^9, 3.660216509608418*^9}, {
+   3.660216541039873*^9, 3.6602165816069813`*^9}, {3.6602166122612886`*^9, 
+   3.660216630302285*^9}, 
+   3.660217028533127*^9},ExpressionUUID->"3424e11f-2a45-486c-bd3b-\
+e1fdacb9109c"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"commutator", "=", 
+   RowBox[{"CyclicHermiteSpline", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "2"}], "+", 
+       RowBox[{"2", "I"}]}], ",", 
+      RowBox[{
+       RowBox[{"-", "2"}], "-", 
+       RowBox[{"2", "I"}]}], ",", 
+      RowBox[{"2", "-", 
+       RowBox[{"2", "I"}]}], ",", 
+      RowBox[{"2", "+", 
+       RowBox[{"2", "I"}]}], ",", 
+      RowBox[{
+       RowBox[{"-", "1"}], "-", "I"}], ",", 
+      RowBox[{
+       RowBox[{"-", "1"}], "+", "I"}], ",", 
+      RowBox[{"1", "+", "I"}], ",", 
+      RowBox[{"1", "-", "I"}]}], "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"ParametricPlot", "[", 
+    RowBox[{
+     RowBox[{"ReIm", "@", 
+      RowBox[{"commutator", "[", "t", "]"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "1"}], "}"}]}], "]"}], ",", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "0"}], "}"}]}], "}"}], ",", 
+     RowBox[{"PlotStyle", "\[Rule]", "Red"}]}], "]"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.660216648100999*^9, 3.660216658093709*^9}, {
+   3.660216866838798*^9, 3.660216876088869*^9}, {3.660216930335433*^9, 
+   3.6602169385833178`*^9}, {3.660217068556162*^9, 3.660217103816156*^9}, {
+   3.660217264724516*^9, 3.660217279937855*^9}, 3.6602174637015753`*^9, {
+   3.660217501963656*^9, 3.660217661007475*^9}, {3.660217698430455*^9, 
+   3.660217745094016*^9}, {3.712941444972992*^9, 
+   3.712941445331583*^9}},ExpressionUUID->"2aae7d72-56d3-4891-8c0e-\
+1ddd7758cde9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"FundamentalGroupElement", "[", 
+    RowBox[{"\[Gamma]_Function", ",", "p_List"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Chop", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"#", ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"NIntegrate", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"\[Gamma]", "[", 
+                RowBox[{"#2", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "/", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"t", " ", 
+                  RowBox[{"\[Gamma]", "[", 
+                   RowBox[{"#2", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}]}], "-", "#"}], 
+                ")"}]}], ",", 
+              RowBox[{"{", 
+               RowBox[{"t", ",", "0", ",", "1"}], "}"}]}], "]"}], "+", 
+            RowBox[{"NIntegrate", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"D", "[", 
+                RowBox[{
+                 RowBox[{"\[Gamma]", "[", "t", "]"}], ",", "t"}], "]"}], "/", 
+               
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"\[Gamma]", "[", "t", "]"}], "-", "#"}], ")"}]}], 
+              ",", 
+              RowBox[{"{", 
+               RowBox[{"t", ",", 
+                RowBox[{"#2", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], ",", 
+                RowBox[{"#2", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}]}], "}"}]}], "]"}], "+", 
+            RowBox[{"NIntegrate", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"\[Gamma]", "[", 
+                 RowBox[{"#2", "[", 
+                  RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "/", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{"1", "-", "t"}], ")"}], 
+                  RowBox[{"\[Gamma]", "[", 
+                   RowBox[{"#2", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "]"}]}], "-", "#"}], 
+                ")"}]}], ",", 
+              RowBox[{"{", 
+               RowBox[{"t", ",", "0", ",", "1"}], "}"}]}], "]"}]}], ")"}], 
+          "/", 
+          RowBox[{"(", 
+           RowBox[{"2", "Pi", " ", "I"}], ")"}]}]}], "}"}], "&"}], "@@@", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"#", ",", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Prepend", "[", 
+                  RowBox[{"#", ",", "0"}], "]"}], ",", 
+                 RowBox[{"Append", "[", 
+                  RowBox[{"#", ",", "1"}], "]"}]}], "}"}], "\[Transpose]"}], 
+              "&"}], "[", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"Most", "[", "#2", "]"}], "+", 
+                RowBox[{"Rest", "[", "#2", "]"}]}], ")"}], "/", "2"}], 
+             "]"}]}], "}"}], "\[Transpose]"}], "&"}], "@@", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"SortBy", "[", 
+           RowBox[{
+            RowBox[{"Join", "@@", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"#", ",", "t"}], "}"}], "/.", 
+                 RowBox[{"NSolve", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"\[Gamma]", "[", "t", "]"}], "\[Equal]", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"\[Gamma]", "[", "0", "]"}], 
+                    RowBox[{"(", 
+                    RowBox[{"1", "-", "h"}], ")"}]}], "+", 
+                    RowBox[{"h", "#"}]}]}], "&&", 
+                    RowBox[{"1", "<", "h"}], "&&", 
+                    RowBox[{"0", "\[LessEqual]", "t", "\[LessEqual]", "1"}]}],
+                    ",", 
+                   RowBox[{"{", 
+                    RowBox[{"t", ",", "h"}], "}"}]}], "]"}]}], "&"}], "/@", 
+               "p"}], ")"}]}], ",", "Last"}], "]"}], "\[Transpose]"}], 
+         ")"}]}], ")"}]}], "]"}], "/.", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"a___", ",", 
+        RowBox[{"{", 
+         RowBox[{"b_", ",", "c_"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"d_", ",", "e_"}], "}"}], ",", "f___"}], "}"}], "/;", 
+      RowBox[{
+       RowBox[{"b", "\[Equal]", "d"}], "&&", 
+       RowBox[{
+        RowBox[{"Chop", "[", 
+         RowBox[{"c", "+", "e"}], "]"}], "\[Equal]", "0"}]}]}], "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"a", ",", "f"}], "}"}]}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6523127012735643`*^9, 3.6523131882438803`*^9}, {
+   3.6523132522289457`*^9, 3.652313418046968*^9}, {3.652313453382125*^9, 
+   3.652313455396867*^9}, {3.652313539413578*^9, 3.6523135446369143`*^9}, 
+   3.652313595019514*^9, {3.652313708401268*^9, 3.652313708746928*^9}, {
+   3.6523137478648987`*^9, 3.65231377191324*^9}, {3.6523143133811073`*^9, 
+   3.652314314435207*^9}, {3.652314422638492*^9, 3.65231446160048*^9}, 
+   3.652314509695353*^9, {3.652314628831015*^9, 3.652314631485526*^9}, {
+   3.652314727809184*^9, 3.65231473466713*^9}, {3.652314764929216*^9, 
+   3.6523147899806767`*^9}, {3.652314837280579*^9, 3.6523149201355658`*^9}, {
+   3.652505029446145*^9, 3.6525050334390707`*^9}, {3.652505064883979*^9, 
+   3.652505071795874*^9}, {3.712938825357609*^9, 3.712938832515923*^9}, {
+   3.712940229320462*^9, 
+   3.712940249888227*^9}},ExpressionUUID->"8b363c68-f534-46fa-bb5f-\
+3fcc933d3ee1"],
+
+Cell["\<\
+The fundamental group element can the be found, given the curve and list of \
+missing points, by evaluating:\
+\>", "Text",
+ CellChangeTimes->{{3.712940890412189*^9, 
+  3.712940988784615*^9}},ExpressionUUID->"5b06a834-ce61-4caf-8cc7-\
+e0cf86bcaed0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FundamentalGroupElement", "[", 
+  RowBox[{"commutator", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.660217798848168*^9, 
+  3.6602178090353527`*^9}},ExpressionUUID->"2cf82c78-4714-4808-96d9-\
+a1bb922223f7"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", "0.999999999999899`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0.9999999999999378`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", 
+     RowBox[{"-", "1.0000000000007492`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "1.0000000000001925`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.660217812930479*^9, 
+  3.712941456363468*^9},ExpressionUUID->"40446d1e-0aa8-40f1-8833-\
+f17ced91c185"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1278, 1598},
+WindowMargins->{{1, Automatic}, {Automatic, 1}},
+Magnification:>2. Inherited,
+FrontEndVersion->"11.1 for Linux x86 (64-bit) (April 18, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 670, 17, 530, "Title", "ExpressionUUID" -> \
+"e0ad77f1-07f7-48b7-890c-9b42f215680c"],
+Cell[1253, 41, 1564, 34, 251, "Text", "ExpressionUUID" -> \
+"9cf7c8fc-635d-4b38-9f23-96ac159193c9"],
+Cell[2820, 77, 440, 10, 98, "Text", "ExpressionUUID" -> \
+"05d523ba-942b-4c9a-bb73-b1b218f7bd7f"],
+Cell[3263, 89, 4939, 142, 808, "Input", "ExpressionUUID" -> \
+"f71ee779-2f95-40d0-8a29-2fc2a3e88444"],
+Cell[8205, 233, 599, 16, 62, "Text", "ExpressionUUID" -> \
+"3424e11f-2a45-486c-bd3b-e1fdacb9109c"],
+Cell[8807, 251, 1707, 47, 215, "Input", "ExpressionUUID" -> \
+"2aae7d72-56d3-4891-8c0e-1ddd7758cde9"],
+Cell[10517, 300, 5729, 146, 637, "Input", "ExpressionUUID" -> \
+"8b363c68-f534-46fa-bb5f-3fcc933d3ee1"],
+Cell[16249, 448, 258, 6, 98, "Text", "ExpressionUUID" -> \
+"5b06a834-ce61-4caf-8cc7-e0cf86bcaed0"],
+Cell[CellGroupData[{
+Cell[16532, 458, 306, 8, 88, "Input", "ExpressionUUID" -> \
+"2cf82c78-4714-4808-96d9-a1bb922223f7"],
+Cell[16841, 468, 568, 17, 88, "Output", "ExpressionUUID" -> \
+"40446d1e-0aa8-40f1-8833-f17ced91c185"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
