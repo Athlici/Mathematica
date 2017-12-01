@@ -47,3 +47,8 @@ Enumerate Graphs by Vertex Degrees
 Simple recursive function to, given a list of vertex degrees, enumerate all graphs with those degrees.
 
 In the current, primitive, version it gets swamped by isomorphic graphs.
+
+Voronoi-Filter
+--------------
+Given an image this calculates a Voronoi diagram of the same size with the cell colour set to the averagepixel colour in the corresponding cell.
+![Lena](https://github.com/Athlici/Mathematica/blob/master/VoronoiPictures/Lena.png)
