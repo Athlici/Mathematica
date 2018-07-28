@@ -21,7 +21,7 @@ This is then solved optimally by Mathematicas LinearProgramming function, but du
 
 FundamentalGroupElement
 =======================
-Given a (hermite interpolation of) a path through the complex plane with missing points this function will calculate the element in the fundamental group corresponding to its equivalence class.
+Given (a hermite interpolation of) a path through the complex plane with missing points this function will calculate the element in the fundamental group corresponding to its equivalence class.
 
 For example, the commutator aba<sup>-1</sup>b<sup>-1</sup> (with -a=b=1) is the equivalence class of the following path:
 ![Commutator](https://github.com/Athlici/Mathematica/blob/master/FundamentalGroupElement/Commutator.png)
@@ -50,5 +50,5 @@ In the current, primitive, version it gets swamped by isomorphic graphs.
 
 Voronoi-Filter
 --------------
-Given an image this calculates a Voronoi diagram of the same size with the cell colour set to the averagepixel colour in the corresponding cell.
+Given an image this calculates a Voronoi diagram of the same size with the cell colour set to the average pixel colour in the corresponding cell.
 ![Lena](https://github.com/Athlici/Mathematica/blob/master/VoronoiPictures/Lena.png)
