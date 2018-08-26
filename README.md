@@ -38,6 +38,10 @@ CYK
 ---
 Decide word-membership in a CNF context free language.
 
+LLL
+---
+Given a lattice basis compute one bounded in size exponentially in polynomial time.
+This is a recursive and thereby somewhat elegant educational implementation.
 
 Miscellaneous
 =============
