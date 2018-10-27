@@ -52,6 +52,12 @@ Simple recursive function to, given a list of vertex degrees, enumerate all grap
 
 In the current, primitive, version it gets swamped by isomorphic graphs.
 
+Effective Hilbert Nullstellensatz
+---------------------------------
+Test whether a system of polynomials f1,...,fn=0 has a solution by converting the decomposition 1=g1*f1+...+gn*fn monomialwise into a set of linear equations using the degree bound of M.Sombra. Solving those then either gives a certificate of intractibility or implies the existence of a solution. 
+
+The algorithm necessarily has an exponential time worst case complexity and should therefore not be expected to work for anything but small inputs.
+
 Voronoi-Filter
 --------------
 Given an image this calculates a Voronoi diagram of the same size with the cell colour set to the average pixel colour in the corresponding cell.
